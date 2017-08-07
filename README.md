@@ -1,7 +1,7 @@
 xAPI-Android-Roses
 ==================
 
-This is a Javascript library for test xAPI profile matching.
+This is a Javascript library for testing xAPI profile matching.
 
 ## License
    Copyright &copy;2016 Advanced Distributed Learning
