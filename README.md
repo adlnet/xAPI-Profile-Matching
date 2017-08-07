@@ -1,4 +1,4 @@
-xAPI-Android-Roses
+xAPI Profile Matching
 ==================
 
 This is a Javascript library for testing xAPI profile matching.
