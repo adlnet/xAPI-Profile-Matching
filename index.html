@@ -1,0 +1,140 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Test Profile Pattern Match</title> 
+
+        
+        <script src="testMatching.js"></script>
+        <script language="JavaScript">
+
+        //Helper Functions
+
+        //Creates a sequence pattern. Values in the format: var pattern = Object.freeze(["a", "b", "c"]);
+        function seq(values){
+            return ["sequence", values];
+        }
+
+        //Creates an alternate pattern. Values in the format: var pattern = Object.freeze(["a", "b", "c"]);
+        function alt(values){
+            return ["alternates", values];
+        }
+
+        //Create a zero or more pattern. Only one value in the format: var pattern = Object.freeze("a");
+        function star(value){
+            return ["zeroOrMore", value];
+        }
+
+        //Create a one or more pattern. Only one value in the format: var pattern = Object.freeze("a");
+        function plus(value){
+            return ["oneOrMore", value];
+
+        }
+
+        //Create an optional pattern. Only one value in the format: var pattern = Object.freeze("a");
+        function opt(value){
+            return ["optional", value];
+        }
+
+
+        function test_match(stmnt, pattern){
+            for (var i = 0; i < stmnt.length; i++) {
+                result = matches(stmnt[i],pattern);
+
+                if(result[0] === null){
+                    result[0] = 'Partial';                   
+                }
+                if(result[1].length == 0){
+                    result[1] = '[]';
+                }
+                document.getElementById('result').innerHTML += result+'<br>';
+            }
+        }
+
+        function setupTest(){ 
+
+            // Test simple partial
+            var statement = new Array();
+            statement.push(["a", "b"]);
+            var pattern = Object.freeze(["a", "b", "c"]);
+            var p = seq(pattern);
+            document.getElementById('result').innerHTML += '<h3>Test simple partial</h3> '+statement+' '+p +'<br>';
+            test_match(statement, p);
+            document.getElementById('result').innerHTML += '<br>';
+            // ------------ End of simple test ------------
+
+
+            // Test partial success hybrid
+            statement = new Array();
+            statement.push(["a", "b", "a", "b"]);
+            pattern = Object.freeze(["a", "b"]);
+            p = plus(seq(pattern));
+            document.getElementById('result').innerHTML += '<h3>Test partial hybrid</h3> '+statement+' '+p +'<br>';
+            test_match(statement, p);
+            document.getElementById('result').innerHTML += '<br>';
+            // ------------ End of hybrid test ------------
+
+            // Test scormlike example
+            var scormlike_stmnt = new Array();
+
+            scormlike_stmnt.push(['initialization', 'suspension', 'resumption', 'otheractivity', 'otheractivity', 'termination']);
+
+            scormlike_stmnt.push(['initialization', 'suspension', 'resumption', 'scoactivity', 'interactionactivity', 'termination']);
+
+            scormlike_stmnt.push(['initialization', 'otheractivity', 'suspension', 'resumption', 'suspension', 'resumption', 'termination']);
+
+            scormlike_stmnt.push(['initialization', 'suspension', 'resumption', 'completing', 'scoactivity', 'commenting', 'otheractivity', 'commenting', 'termination']);
+
+            scormlike_stmnt.push(['initialization', 'completing', 'suspension', 'resumption', 'suspension', 'resumption', 'commenting', 'commenting', 'scoactivity', 'otheractivity', 'interactionactivity', 'otheractivity', 'suspension', 'resumption', 'scoactivity', 'scoactivity', 'commenting', 'scoactivity', 'completing', 'suspension', 'resumption', 'otheractivity', 'interactionactivity', 'suspension', 'resumption', 'scoactivity', 'interactionactivity', 'termination']);
+
+            scormlike_stmnt.push(['initialization', 'suspension', 'resumption', 'suspension', 'resumption', 'suspension', 'resumption', 'suspension', 'resumption', 'completing', 'commenting', 'otheractivity', 'completing', 'interactionactivity', 'suspension', 'resumption', 'suspension', 'resumption', 'suspension', 'resumption', 'interactionactivity', 'otheractivity', 'suspension', 'resumption', 'commenting', 'otheractivity', 'scoactivity', 'commenting', 'commenting', 'otheractivity', 'otheractivity', 'commenting', 'scoactivity', 'otheractivity', 'interactionactivity', 'interactionactivity', 'suspension', 'resumption', 'otheractivity', 'scoactivity', 'interactionactivity', 'commenting', 'commenting', 'scoactivity', 'suspension', 'resumption', 'suspension', 'resumption', 'otheractivity', 'otheractivity', 'interactionactivity', 'suspension', 'resumption', 'commenting', 'interactionactivity', 'commenting', 'scoactivity', 'suspension', 'resumption', 'termination']);
+
+            scormlike_stmnt.push(['initialization', 'suspension', 'resumption', 'interactionactivity', 'commenting', 'completing', 'commenting', 'scoactivity', 'interactionactivity', 'otheractivity', 'commenting', 'otheractivity', 'otheractivity', 'commenting', 'suspension', 'resumption', 'scoactivity', 'suspension', 'resumption', 'scoactivity', 'otheractivity', 'completing', 'otheractivity', 'scoactivity', 'commenting', 'commenting', 'commenting', 'interactionactivity', 'completing', 'completing', 'suspension', 'resumption', 'scoactivity', 'completing', 'otheractivity', 'otheractivity', 'interactionactivity', 'scoactivity', 'scoactivity', 'scoactivity', 'suspension', 'resumption', 'commenting', 'otheractivity', 'suspension', 'resumption', 'scoactivity', 'interactionactivity', 'suspension', 'resumption', 'completing', 'suspension', 'resumption', 'otheractivity', 'otheractivity', 'interactionactivity', 'suspension', 'resumption', 'otheractivity', 'commenting', 'interactionactivity', 'commenting', 'commenting', 'completing', 'completing', 'scoactivity', 'commenting', 'commenting', 'otheractivity', 'commenting', 'completing', 'otheractivity', 'commenting', 'scoactivity', 'commenting', 'suspension', 'resumption', 'scoactivity', 'scoactivity', 'interactionactivity', 'scoactivity', 'suspension', 'resumption', 'otheractivity', 'interactionactivity', 'scoactivity', 'scoactivity', 'completing', 'suspension', 'resumption', 'interactionactivity', 'scoactivity', 'commenting', 'completing', 'commenting', 'interactionactivity', 'commenting', 'scoactivity', 'commenting', 'scoactivity', 'otheractivity', 'interactionactivity', 'otheractivity', 'interactionactivity', 'otheractivity', 'suspension', 'resumption', 'commenting', 'scoactivity', 'suspension', 'resumption', 'termination']);
+
+            scormlike_stmnt.push(['initialization', 'suspension', 'resumption', 'commenting', 'scoactivity', 'interactionactivity', 'otheractivity', 'scoactivity', 'suspension', 'resumption', 'scoactivity', 'commenting', 'suspension', 'resumption', 'commenting', 'scoactivity', 'interactionactivity', 'interactionactivity', 'interactionactivity', 'suspension', 'resumption', 'scoactivity', 'suspension', 'resumption', 'suspension', 'resumption', 'suspension', 'resumption', 'completing', 'scoactivity', 'scoactivity', 'interactionactivity', 'scoactivity', 'commenting', 'completing', 'completing', 'scoactivity', 'scoactivity', 'completing', 'interactionactivity', 'commenting', 'completing', 'completing', 'suspension', 'resumption', 'scoactivity', 'commenting', 'suspension', 'resumption', 'interactionactivity', 'commenting', 'completing', 'interactionactivity', 'suspension', 'resumption', 'scoactivity', 'interactionactivity', 'completing', 'interactionactivity', 'completing', 'otheractivity', 'scoactivity', 'commenting', 'scoactivity', 'otheractivity', 'suspension', 'resumption', 'completing', 'scoactivity', 'commenting', 'interactionactivity', 'scoactivity', 'commenting', 'otheractivity', 'interactionactivity', 'completing', 'completing', 'commenting', 'scoactivity', 'scoactivity', 'suspension', 'resumption', 'completing', 'scoactivity', 'commenting', 'commenting', 'commenting', 'completing', 'completing', 'scoactivity', 'interactionactivity', 'completing', 'scoactivity', 'commenting', 'scoactivity', 'scoactivity', 'otheractivity', 'commenting', 'interactionactivity', 'suspension', 'resumption', 'scoactivity', 'otheractivity', 'interactionactivity', 'otheractivity', 'otheractivity', 'scoactivity', 'interactionactivity', 'otheractivity', 'scoactivity', 'commenting', 'interactionactivity', 'suspension', 'resumption', 'suspension', 'resumption', 'completing', 'scoactivity', 'commenting', 'commenting', 'completing', 'scoactivity', 'commenting', 'scoactivity', 'commenting', 'completing', 'scoactivity', 'interactionactivity', 'commenting', 'completing', 'scoactivity', 'interactionactivity', 'interactionactivity', 'suspension', 'resumption', 'interactionactivity', 'otheractivity', 'scoactivity', 'suspension', 'resumption', 'otheractivity', 'suspension', 'resumption', 'otheractivity', 'completing', 'scoactivity', 'scoactivity', 'suspension', 'resumption', 'otheractivity', 'scoactivity', 'commenting', 'commenting', 'suspension', 'resumption', 'commenting', 'completing', 'completing', 'otheractivity', 'otheractivity', 'interactionactivity', 'interactionactivity', 'suspension', 'resumption', 'commenting', 'completing', 'commenting', 'completing', 'commenting', 'otheractivity', 'scoactivity', 'suspension', 'resumption', 'commenting', 'completing', 'termination']);
+;
+
+            var pattern = Object.freeze(['sequence', ['initialization', ['zeroOrMore', ['alternates', ['scoactivity', 'otheractivity', 'commenting', 'interactionactivity', 'completing']]], ['zeroOrMore', ['sequence', ['suspension', 'resumption', ['zeroOrMore', ['alternates', ['scoactivity', 'otheractivity', 'commenting', 'interactionactivity', 'completing']]]]]], 'termination']]);
+
+            document.getElementById('result').innerHTML += '<h3>Test SCORM like </h3>';
+            test_match(scormlike_stmnt, pattern);
+            document.getElementById('result').innerHTML += '<br>';
+            // ------------ End of SCORM test ------------ 
+
+            // Test cmi5 patterns basic
+            var cmi5_stmnt = new Array();
+
+            cmi5_stmnt.push(['launched', 'initialized', 'passed', 'terminated']);
+
+            cmi5_stmnt.push(['satisfied', 'satisfied', 'satisfied', 'satisfied']);
+
+            cmi5_stmnt.push(['satisfied', 'satisfied', 'satisfied', 'satisfied', 'launched', 'initialized', 'passed', 'terminated', 'launched', 'initialized', 'terminated']);
+
+            cmi5_stmnt.push(['satisfied', 'satisfied', 'satisfied', 'satisfied', 'launched', 'initialized', 'completed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'abandoned']);
+
+            cmi5_stmnt.push(['satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'launched', 'initialized', 'completed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'abandoned']);
+
+            cmi5_stmnt.push(['launched', 'initialized', 'passed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'completed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'abandoned']);
+
+            cmi5_stmnt.push(['launched', 'initialized', 'passed', 'completed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'terminated', 'launched', 'initialized', 'completed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'abandoned', 'launched', 'initialized', 'passed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'completed', 'terminated', 'launched', 'initialized', 'failed', 'satisfied', 'satisfied', 'terminated', 'launched', 'initialized', 'failed', 'terminated', 'launched', 'initialized', 'passed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'completed', 'abandoned', 'launched', 'initialized', 'completed', 'failed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'terminated', 'launched', 'initialized', 'abandoned', 'waived', 'satisfied', 'launched', 'initialized', 'terminated', 'launched', 'initialized', 'completed', 'satisfied', 'satisfied', 'satisfied', 'failed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'abandoned', 'launched', 'initialized', 'completed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'abandoned', 'launched', 'initialized', 'completed', 'satisfied', 'satisfied', 'abandoned', 'launched', 'initialized', 'terminated', 'launched', 'initialized', 'terminated', 'launched', 'initialized', 'passed', 'satisfied', 'satisfied', 'abandoned', 'waived', 'satisfied', 'satisfied', 'satisfied', 'launched', 'initialized', 'completed', 'passed', 'satisfied', 'satisfied', 'terminated']);
+
+            cmi5_stmnt.push(['launched', 'initialized', 'failed', 'satisfied', 'satisfied', 'terminated', 'launched', 'initialized', 'failed', 'completed', 'abandoned', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'waived', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'waived', 'satisfied', 'satisfied', 'launched', 'initialized', 'passed', 'satisfied', 'abandoned', 'launched', 'initialized', 'failed', 'abandoned', 'launched', 'initialized', 'completed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'terminated', 'launched', 'initialized', 'passed', 'satisfied', 'terminated', 'launched', 'initialized', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'failed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'abandoned', 'launched', 'initialized', 'failed', 'terminated', 'launched', 'initialized', 'passed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'completed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'terminated', 'launched', 'initialized', 'completed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'terminated', 'launched', 'initialized', 'passed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'abandoned', 'launched', 'initialized', 'abandoned', 'launched', 'initialized', 'passed', 'satisfied', 'satisfied', 'abandoned', 'satisfied', 'waived', 'satisfied', 'launched', 'initialized', 'failed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'terminated', 'launched', 'initialized', 'failed', 'terminated', 'launched', 'initialized', 'abandoned', 'satisfied', 'waived', 'launched', 'initialized', 'completed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'passed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'abandoned', 'launched', 'initialized', 'passed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'terminated', 'launched', 'initialized', 'failed', 'terminated', 'launched', 'initialized', 'completed', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'passed', 'satisfied', 'satisfied', 'abandoned', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'waived', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'satisfied', 'launched', 'initialized', 'completed', 'satisfied', 'passed', 'satisfied', 'satisfied', 'satisfied', 'abandoned', 'launched', 'initialized', 'passed', 'satisfied', 'completed', 'satisfied', 'abandoned', 'launched', 'initialized', 'completed', 'satisfied', 'satisfied', 'satisfied', 'terminated']);
+
+            pattern = Object.freeze(['sequence', [['zeroOrMore', 'satisfied'], ['zeroOrMore', ['alternates', [['sequence', ['launched', 'initialized', ['alternates', [['sequence', [['optional', 'completed'], ['zeroOrMore', 'satisfied'], 'failed']], ['sequence', ['failed', ['optional', 'completed']]]]], ['zeroOrMore', 'satisfied'], ['alternates', ['terminated', 'abandoned']]]], ['sequence', ['launched', 'initialized', ['alternates', [['sequence', ['completed', ['zeroOrMore', 'satisfied'], 'passed']], ['sequence', ['passed', ['zeroOrMore', 'satisfied'], 'completed']]]], ['zeroOrMore', 'satisfied'], ['alternates', ['terminated', 'abandoned']]]], ['sequence', ['launched', 'initialized', 'failed', ['alternates', ['terminated', 'abandoned']]]], ['sequence', ['launched', 'initialized', ['alternates', ['terminated', 'abandoned']]]], ['sequence', ['launched', 'initialized', 'passed', ['zeroOrMore', 'satisfied'], ['alternates', ['terminated', 'abandoned']]]], ['sequence', ['launched', 'initialized', 'completed', ['zeroOrMore', 'satisfied'], ['alternates', ['terminated', 'abandoned']]]], ['sequence', [['zeroOrMore', 'satisfied'], 'waived', ['zeroOrMore', 'satisfied']]]]]]]]);
+
+            document.getElementById('result').innerHTML += '<h3>Test CMI5 </h3>';
+            test_match(cmi5_stmnt, pattern);
+            document.getElementById('result').innerHTML += '<br>';
+            // ------------ End of CMI5 test ------------
+            
+        }
+        </script>
+
+    </head> 
+    <body>
+        <h2>Test Profile Pattern Match</h2>
+        <input type="submit" name="submit" onClick=setupTest();>
+        
+        <div id="result"></div>
+    </body>
+</html>
