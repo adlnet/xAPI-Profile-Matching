@@ -5,7 +5,7 @@
         <title>Test Profile Pattern Match</title> 
 
         
-        <script src="testMatching.js"></script>
+        <script src="profileMatching.js"></script>
         <script language="JavaScript">
 
         //Helper Functions
@@ -37,7 +37,7 @@
         }
 
 
-        function test_match(stmnt, pattern){
+        function match(stmnt, pattern){
             for (var i = 0; i < stmnt.length; i++) {
                 result = matches(stmnt[i],pattern);
 
@@ -59,7 +59,7 @@
             var pattern = Object.freeze(["a", "b", "c"]);
             var p = seq(pattern);
             document.getElementById('result').innerHTML += '<h3>Test simple partial</h3> '+statement+' '+p +'<br>';
-            test_match(statement, p);
+            match(statement, p);
             document.getElementById('result').innerHTML += '<br>';
             // ------------ End of simple test ------------
 
@@ -70,7 +70,7 @@
             pattern = Object.freeze(["a", "b"]);
             p = plus(seq(pattern));
             document.getElementById('result').innerHTML += '<h3>Test partial hybrid</h3> '+statement+' '+p +'<br>';
-            test_match(statement, p);
+            match(statement, p);
             document.getElementById('result').innerHTML += '<br>';
             // ------------ End of hybrid test ------------
 
@@ -97,7 +97,7 @@
             var pattern = Object.freeze(['sequence', ['initialization', ['zeroOrMore', ['alternates', ['scoactivity', 'otheractivity', 'commenting', 'interactionactivity', 'completing']]], ['zeroOrMore', ['sequence', ['suspension', 'resumption', ['zeroOrMore', ['alternates', ['scoactivity', 'otheractivity', 'commenting', 'interactionactivity', 'completing']]]]]], 'termination']]);
 
             document.getElementById('result').innerHTML += '<h3>Test SCORM like </h3>';
-            test_match(scormlike_stmnt, pattern);
+            match(scormlike_stmnt, pattern);
             document.getElementById('result').innerHTML += '<br>';
             // ------------ End of SCORM test ------------ 
 
@@ -123,7 +123,7 @@
             pattern = Object.freeze(['sequence', [['zeroOrMore', 'satisfied'], ['zeroOrMore', ['alternates', [['sequence', ['launched', 'initialized', ['alternates', [['sequence', [['optional', 'completed'], ['zeroOrMore', 'satisfied'], 'failed']], ['sequence', ['failed', ['optional', 'completed']]]]], ['zeroOrMore', 'satisfied'], ['alternates', ['terminated', 'abandoned']]]], ['sequence', ['launched', 'initialized', ['alternates', [['sequence', ['completed', ['zeroOrMore', 'satisfied'], 'passed']], ['sequence', ['passed', ['zeroOrMore', 'satisfied'], 'completed']]]], ['zeroOrMore', 'satisfied'], ['alternates', ['terminated', 'abandoned']]]], ['sequence', ['launched', 'initialized', 'failed', ['alternates', ['terminated', 'abandoned']]]], ['sequence', ['launched', 'initialized', ['alternates', ['terminated', 'abandoned']]]], ['sequence', ['launched', 'initialized', 'passed', ['zeroOrMore', 'satisfied'], ['alternates', ['terminated', 'abandoned']]]], ['sequence', ['launched', 'initialized', 'completed', ['zeroOrMore', 'satisfied'], ['alternates', ['terminated', 'abandoned']]]], ['sequence', [['zeroOrMore', 'satisfied'], 'waived', ['zeroOrMore', 'satisfied']]]]]]]]);
 
             document.getElementById('result').innerHTML += '<h3>Test CMI5 </h3>';
-            test_match(cmi5_stmnt, pattern);
+            match(cmi5_stmnt, pattern);
             document.getElementById('result').innerHTML += '<br>';
             // ------------ End of CMI5 test ------------
             
@@ -132,7 +132,7 @@
 
     </head> 
     <body>
-        <h2>Test Profile Pattern Match</h2>
+        <h2>Profile Pattern Match</h2>
         <input type="submit" name="submit" onClick=setupTest();>
         
         <div id="result"></div>
