@@ -42,7 +42,7 @@
                 result = matches(stmnt[i],pattern);
 
                 if(result[0] === null){
-                    result[0] = 'Partial';                   
+                    result[0] = 'partial';                   
                 }
                 if(result[1].length == 0){
                     result[1] = '[]';
@@ -59,6 +59,26 @@
             var pattern = Object.freeze(["a", "b", "c"]);
             var p = seq(pattern);
             document.getElementById('result').innerHTML += '<h3>Test simple partial</h3> '+statement+' '+p +'<br>';
+            match(statement, p);
+            document.getElementById('result').innerHTML += '<br>';
+            // ------------ End of simple test ------------
+
+            // Test simple success
+            var statement = new Array();
+            statement.push(["a", "b", "c"]);
+            var pattern = Object.freeze(["a", "b", "c"]);
+            var p = seq(pattern);
+            document.getElementById('result').innerHTML += '<h3>Test simple success</h3> '+statement+' '+p +'<br>';
+            match(statement, p);
+            document.getElementById('result').innerHTML += '<br>';
+            // ------------ End of simple test ------------
+
+            // Test simple failure
+            var statement = new Array();
+            statement.push(["d", "e"]);
+            var pattern = Object.freeze(["a", "b", "c"]);
+            var p = seq(pattern);
+            document.getElementById('result').innerHTML += '<h3>Test simple failure</h3> '+statement+' '+p +'<br>';
             match(statement, p);
             document.getElementById('result').innerHTML += '<br>';
             // ------------ End of simple test ------------
